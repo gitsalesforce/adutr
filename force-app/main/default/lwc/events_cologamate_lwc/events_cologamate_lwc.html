@@ -1,0 +1,16 @@
+<template>
+      <lightning-badge>{title}</lightning-badge>
+      <lightning-input
+      label="Input in Lwc"
+      onchange={handleChange}
+    ></lightning-input>
+    <lightning-radio-group name="radioGroup"
+                           label="Radio Group"
+                           options={options}
+                           value={value}
+                           required
+                           type="button"
+                           onchange={handleOnChange}></lightning-radio-group>
+
+                           value={value}
+  </template>

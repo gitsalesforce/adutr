@@ -1,0 +1,145 @@
+<!--Custom Labels In Lightning Aura Component-->
+<aura:component implements="forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens" access="global">
+    <aura:attribute name="welcome" type="String" access="global"/>
+    <aura:attribute name="softwareId" type="String" access="global" description="Fetching SoftwareID"/>  
+    <aura:attribute name="title" type="String" access="global" description="Fetching Title" />  
+    <aura:attribute name="description" type="String" access="global" description="Fetching Description"  />  
+    <aura:attribute name="stepsToReproduce" type="String" access="global" description="Fetching stepsToReproduce" required="false" />
+    <aura:attribute name="troubleshootWithEngineer" type="Boolean" access="global" description="Help from NI"/>  
+    <aura:attribute name="troubleshootWithEngineer11" type="Boolean" access="global" description="Help from NI"/>  
+    <aura:attribute name="issearching" type="Boolean" default="false" description="Loads Spinner in Search"/>
+     <aura:attribute name="radioOptions" type="List" default="[
+                                                             {'label': 'Yes', 'value': 'true'},
+                                                             {'label': 'No', 'value': 'false'} ]"/>
+    <aura:attribute name="ContactMethods" type="String" access="global"  description="Contacts Method types"/>  
+    <aura:attribute name="radioOptionsContactMethod" type="List" default="[
+                                                                          {'label': 'Phone', 'value': 'Phone'},
+                                                                          {'label': 'Email', 'value': 'Email'} ]"/>
+    <aura:attribute name="txt_contactEmail" type="String" access="global" description="Email Address to Contact" required="false" />  
+    <aura:attribute name="txt_contactNumber" type="String" access="global" description="Phone Number to Contact" required="false" />  
+    <aura:attribute name="chk_defaultEmail" type="boolean" access="global" description="Email Checkbox" required="false" />  
+    <aura:attribute name="chk_defaultPhone" type="boolean" access="global" description="Phone Checkbox" required="false" />
+    <aura:attribute name="CaseUid" type="String" access="global" description="Stores Caseuid" />
+    
+    <!--Currently enabled isEntitledUser attribute by flow-->
+    <aura:attribute name="isEntitledUser" type="String" access="global" description="Is User have Entitlement ID or not" /> 
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_8-of-12">
+            <!--Heading Main -->
+            <div class="slds-text-body_large smaintile"><b>Report a Bug</b></div>
+            <!--Heading Subtile-->
+            <div class="slds-text-body_large smalltile"><b>Use this form to create a new service request with NI technical support.</b></div>
+            <!--Heading Last-->
+            <div class="slds-text-body_large maintile slds-p-top_large slds-p-botton_large "><b>Open New Service Request for <ui:outputText value="{!v.softwareId}"/></b></div>
+            <!--Title-->
+            <div class="slds-text-body_large tile"><b>Request Title</b></div>
+            <lightning:layout>
+                <lightning:layoutItem padding="around-small">
+                    <lightning:input value="{!v.title}"
+                                     required="true"
+                                     placeholder=""
+                                     type="text"
+                                     label="{!$Label.c.Title}"
+                                     onchange="{!c.keyCheck}"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+            <!--Description-->
+            <div class="slds-text-body_large tile "><b>Problem Description</b></div>
+            <lightning:layout>
+                <lightning:layoutItem  padding="around-small">
+                    <lightning:textarea value="{!v.description}"
+                                        required="true"
+                                        placeholder=""
+                                        type="text"
+                                        isLoading="{!v.issearching }"
+                                        label="{!$Label.c.txt_problemDescription}"
+                                        onchange="{!c.keyCheck}"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+            <!--StepstoReproduce-->
+            <div class="slds-text-body_large tile"><b>Steps To Reproduce</b></div>
+            <lightning:layout>
+                <lightning:layoutItem  padding="around-small">
+                    <lightning:textarea value="{!v.stepsToReproduce}"
+                                        required="true"
+                                        placeholder=""
+                                        type="search"
+                                        isLoading="{!v.issearching }"
+                                        label="{!$Label.c.stepsToReproduce}"
+                                        onchange="{!c.keyCheck}"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+            <!--Enters if the user have Entitlement id-->
+            <!--troubleshootWithEngineer-->
+            <div class="slds-text-body_large tile"><b>Would you like to troubleshoot with an NI Engineer?</b></div>
+            <lightning:layout>
+                <div class="slds-text-body_regular smalltile">{!$Label.c.troubleshootWithEngineer}</div>
+                <lightning:layoutItem padding="around-small">
+                    <lightning:radioGroup name="troubleshootWithEnginee1r" 
+                                          options="{! v.radioOptions }" 
+                                          value="{! v.troubleshootWithEngineer}"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+            <div class="slds-text-body_regular tinytile"><b><i>* If 'No' is selected, you will not be contacted to discuss this bug.</i></b>></div>
+            <!--Enters if the NI Support Troubleshoot selected-->
+            <!--Contact Info Dependancy Starts here on troubleshootWithEngineer-->
+            <div class="slds-text-body_large tile slds-p-top_medium"><b>Contact Info</b></div>
+            <lightning:layout>
+                <div class="slds-text-body_small smalltile">"{!$Label.c.ContactMethods}"</div>
+                <lightning:layoutItem padding="around-small" flexibility="auto">
+                    <lightning:radioGroup name="radioOptionsContactMethodstore" 
+                                          options="{! v.radioOptionsContactMethod }" 
+                                          value="{!v.ContactMethods}" 
+                                          onchange="{!c.handleChange }" />
+                </lightning:layoutItem>
+            </lightning:layout>
+            <!--Selected if to Contact Info is chosen Email-->
+            <aura:if isTrue="{!v.ContactMethods == 'Email'}">  
+                <!--Email to Contact Info, pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}"-->
+                <lightning:layout>
+                    <lightning:layoutItem padding="around-small"  flexibility="auto">
+                        <lightning:input value="{!v.txt_contactEmail}"
+                                         required="true"
+                                         placeholder=""
+                                         type="email"
+                                         aura:id="email"                                             
+                                         label="{!$Label.c.txt_contactEmail}"
+                                         onchange="{!c.keyCheck}"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <!--Checkboxes to Info & Email Contact Method-->
+                <lightning:layout>
+                    <lightning:input type="checkbox" label="{!$Label.c.chk_defaultEmail}" value="{!v.chk_defaultEmail}" onchange="{!c.onSelectAllChange}" />
+                </lightning:layout>
+            </aura:if>
+            <!--Selected if to Contact Info is chosen Phone, pattern="\d{10}$\"-->
+            <aura:if isTrue="{!v.ContactMethods == 'Phone'}">  
+                <!--Phone to Contact Info-->
+                <lightning:layout>
+                    <lightning:layoutItem padding="around-small" flexibility="auto">
+                        <lightning:input value="{!v.txt_contactNumber}"
+                                         required="true"
+                                         placeholder=""
+                                         type="tel"
+                                         aura:id="phone"
+                                         label="{!$Label.c.txt_contactNumber}"
+                                         onchange="{!c.keyCheck}"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <!--Checkboxes to Info & Phone Contact Method-->
+                <lightning:layout>
+                    <lightning:input type="checkbox" label="{!$Label.c.chk_defaultPhone}" value="{!v.chk_defaultPhone}" onchange="{!c.onSelectAllChange}" /> 
+                </lightning:layout>
+            </aura:if>
+            <!--End line Info-->
+            <lightning:layout>
+                <div class="slds-text-body_large tile">Copy that includes phone number instructions and sets communication expectations.</div>
+            </lightning:layout>
+            <!--End Today's-->
+        </div>
+    </div>
+</aura:component>

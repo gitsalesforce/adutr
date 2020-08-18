@@ -1,0 +1,4 @@
+<design:component >
+ <design:attribute name="title" label="" />
+    <design:attribute name="email" label="" />  
+</design:component>

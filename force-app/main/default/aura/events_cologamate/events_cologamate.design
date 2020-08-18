@@ -1,0 +1,19 @@
+<!--Flow Attribute Name-title,description troubleshootWithEngineer-->
+<design:component>
+    
+    <design:attribute name="welcome" label="" required="true"/>
+    <design:attribute name="title" label="" required="false"/>
+    <design:attribute name="description" label="" required="false"/>  
+    <design:attribute name="stepsToReproduce" label="" required="false"/>
+    <design:attribute name="softwareId" label="" required="false"/> 
+    <design:attribute name="troubleshootWithEngineer" label="" required="true"/> 
+    
+    <design:attribute name="ContactMethods" label="" required="true"/>  
+    <design:attribute name="txt_contactEmail"  label="" required="true"/>  
+    <design:attribute name="txt_contactNumber" label="" required="true"/>  
+    <design:attribute name="chk_defaultEmail" label="" required="false" />  
+    <design:attribute name="chk_defaultPhone" label="" required="false" />  
+    
+    <design:attribute name="CaseUid" label="" /> 
+    <design:attribute name="isEntitledUser" label="" /> 
+</design:component>

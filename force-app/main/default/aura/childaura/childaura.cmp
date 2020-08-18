@@ -1,0 +1,23 @@
+<aura:component  implements="forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens,force:lightningQuickAction" access="global">
+    <!--LWC ATTR-->
+    <aura:attribute name="title" type="String"  description="Used in the List page" access="global"/>
+    <aura:attribute name="validationCheck" type="Boolean" default = 'true'/>
+    <aura:attribute name="email" type="String" access="global"/>
+     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <!-- Attribute to store the validation logic in. -->
+    <aura:attribute name="validate" type="Aura.Action" description="Custom validation function to run when the flow is navigated to the next screen. The function must evaluate the component and return values for isValid and errorMessage."/>
+    <!--Aura Flow Compoennt-->
+    <div class="slds-grid slds-gutters">
+        <!--Display Flow validation message-->
+        <div class="slds-grid slds-grid_vertical">
+            <!--LWC Compoennt-->
+            <div class="slds-col">
+                <!--Sending AND Reciving data from flow to lwc--><!--LWC Name (BR_flow_lwc)-->
+                <c:test_flow onTitlechange="{!c.getTitleFromLwc}"
+                               onEmailchange="{!c.getEmailFromLwc}"/>
+                
+            </div>
+        </div>
+        
+    </div>
+</aura:component>

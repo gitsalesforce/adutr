@@ -1,0 +1,26 @@
+<template>
+
+    <table >
+        <tr>
+            <td>Name</td>
+            <lightning-input type="text" placeholder="Enter the Name" onchange={handleTitleChange} value={name_val} name={name_title} required></lightning-input>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <lightning-input type="text" placeholder="Enter the Email" onchange={handleEmailChange} value={email_val} required name={email_title} ></lightning-input>
+        </tr>
+        <template if:true={isErrorMessage}>
+            <span class="slds-text-color_error">{errorMessage}</span>
+          </template>
+        <tr><td colspan="2"><br/></td></tr>
+        <tr>
+            <td>
+                <lightning-button label="Back" variant="brand" onclick={handleBack}></lightning-button>
+            </td>
+            <td>               
+                <lightning-button label="Next" variant="brand" onclick={handleNext} disabled={checkBool}></lightning-button>
+            </td>
+        </tr>
+    </table>
+   
+</template>

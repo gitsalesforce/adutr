@@ -1,0 +1,21 @@
+<aura:component  implements="flexipage:availableForAllPageTypes" access="global">
+    <!--LWC ATTR-->
+    <aura:attribute name="inputValue" type="String"/>
+    <aura:attribute name="sendinpout" type="String"/>
+    <!--Aura World-->
+    <div class="slds-col slds_size_12-of-12">
+        <lightning:card title="Aura World" iconName="custom:custom30" />
+        <div class="slds-col slds_size_6-of-12">
+            <c:events_cologamate_lwc  sendinpout="{!v.sendinpout}" onvaluechange="{!c.getValueFromLwc}"/><br/>
+        </div>
+        <Lightning:card>
+            The value from Lwc is :- {!v.inputValue}
+        </Lightning:card>
+    </div>
+    <div class="slds-col slds_size_6-of-12">
+        <lightning:card title="Aura World Parent" iconName="custom:custom30" >
+
+        </lightning:card>
+    </div>
+   
+</aura:component>
